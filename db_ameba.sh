@@ -6,7 +6,7 @@ db_ameba() {
         cursor_blink_off() { printf "$ESC[?25l"; }
         cursor_to()        { printf "$ESC[$1;${2:-1}H"; }
         print_option()     { printf "  $1  "; }
-        print_selected()   { printf "  $ESC[7m $1 $ESC[27m"; }
+        print_selected()   { printf "> $ESC[7m $1 $ESC[27m"; }
         get_cursor_row()   { IFS=';' read -sdR -p $'\E[6n' ROW COL; echo ${ROW#*[}; }
         key_input()        { read -s -n3 key 2>/dev/null >&2
                             if [[ $key = $ESC[A ]]; then echo up;    fi
@@ -47,23 +47,28 @@ db_ameba() {
     }
 
     register_db() {
+        clear
         echo "hi"
     }
 
     connect_db() {
+        clear
         echo "hiii"
     }
+
+    clear
 
     echo "======================="
     echo "=   D B - a m e b a   ="
     echo "======================="
+    echo 
     options=("DB登録" "DB接続" "終了")
     select_option "${options[@]}"
     choice=$?
     case $choice in
         0) register_db ;;
         1) connect_db ;;
-        2) echo "終了します" ;;
+        2) clear ;;
     esac
 }
 
